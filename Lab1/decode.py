@@ -56,7 +56,7 @@ code_alph = create_alphabet(code_text)
 code_rates = find_rates(code_text, code_alph)
 
 
-with open("code_alph.txt", "a") as code_file:
+with open("code_alph.txt", "a", encoding="utf8") as code_file:
     for i in code_rates:
         print(str(i), file=code_file)
 
@@ -96,5 +96,5 @@ code_text = replace_letter(code_text, '>', 'Ф')
 code_text = replace_letter(code_text, 'Ы', 'С')
 
 
-with open("decoded text.txt", "w") as file:
+with open("decoded text.txt", "w", encoding="utf8") as file:
     file.write(code_text)
