@@ -1,7 +1,5 @@
-alph = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ "
-
-with open("message.txt", 'r', encoding="utf8") as file:
-    message = file.read()
+import constants as const
+import read_write as rw
 
 
 def cipher_atbash(text: str, alph: str) -> str:
@@ -11,6 +9,8 @@ def cipher_atbash(text: str, alph: str) -> str:
     :param alph: original alphabet
     :return: encoded text
     '''
+    if text is None or alph is None:
+        return "There is no text or alphabet!"
     encoded_text = ""
     for let in text:
         i = alph.index(let)
@@ -18,7 +18,6 @@ def cipher_atbash(text: str, alph: str) -> str:
     return encoded_text
 
 
-encoded_message = cipher_atbash(message, alph)
-
-with open("encoded_message.txt", "w", encoding="utf8") as output_file:
-    output_file.write(encoded_message)
+message = rw.read_txt_file(const.INPUT_FILE_1)
+encoded_message = cipher_atbash(message, const.ALPHABET)
+rw.write_txt_file(encoded_message, const.OUTPUT_FILE_1)
