@@ -1,101 +1,39 @@
-def create_alphabet(text: str) -> str:
+import json
+
+
+import constants as const
+import read_write as rw
+
+
+def get_key(key_path: str) -> dict[str:str]:
     '''
-    Obtaining the cryptographic alphabet of an encrypted message.
-    :param text: encrypted message
-    :return: cryptographic alphabet
+    Getting the json encryption key.
+    :param key_path: path to the file with the encryption key
+    :return: keys dictionary
     '''
-    alph = ""
-    for i in text:
-        if not (i in alph):
-            alph += i
-    return alph
+    try:
+        with open(key_path, "r", encoding="utf-8") as key:
+            return json.load(key)
+    except Exception as e:
+        print(f"Error: {e}")
 
 
-def my_sort(e):
-    return e['rate']
-
-
-def find_rates(text: str, alph: str) -> list:
+def decode_by_key(text: str, key: dict[str:str]) -> str:
     '''
-    Getting the frequency of occurrence of characters.
-    :param text: encrypted message
-    :param alph: cryptographic alphabet
-    :return: frequency of occurrence of characters
+    Decoding the encoded text.
+    :param text: encoded text
+    :param key: keys dictionary
+    :return: decoded text
     '''
-    all_count = len(text)
-    rate = list()
-    for i in alph:
-        count = 0
-        for j in text:
-            if i == j:
-                count += 1
-        rate.append({'symb': i, 'rate': count/all_count})
-    rate.sort(reverse=True, key=my_sort)
-    return rate
+    if text is None or key is None:
+        return "There is no text or key!"
+    decoded_text = ""
+    for let in text:
+        decoded_text += key[let]
+    return decoded_text
 
 
-def replace_letter(text: str, code_let: str, ok_let: str) -> str:
-    '''
-    Replacing an encoded letter with a true one.
-    :param text: encrypted message
-    :param code_let: the encoded letter
-    :param ok_let: the decoded letter
-    :return:
-    '''
-    text = text.replace(ok_let, '*')
-    text = text.replace(code_let, ok_let)
-    text = text.replace('*', code_let)
-    return text
-
-
-with open("text.txt", "r", encoding="utf8") as file:
-    code_text = file.read()
-
-
-code_alph = create_alphabet(code_text)
-code_rates = find_rates(code_text, code_alph)
-
-
-with open("code_alph2.txt", "a", encoding="utf16") as code_file:
-    for i in code_rates:
-        print(str(i), file=code_file)
-       # file.write(str(i))
-
-
-code_text = code_text.replace('М', ' ')
-code_text = replace_letter(code_text, '>', 'И')
-code_text = replace_letter(code_text, 'У', 'Л')
-code_text = replace_letter(code_text, 'Х', 'Н')
-code_text = replace_letter(code_text, '4', 'А')
-code_text = replace_letter(code_text, 'c', 'Д')
-code_text = replace_letter(code_text, 'О', 'Е')
-code_text = replace_letter(code_text, '4', 'Ь')
-code_text = replace_letter(code_text, 'О', 'С')
-code_text = replace_letter(code_text, 'b', 'Г')
-code_text = replace_letter(code_text, '1', 'О')
-code_text = replace_letter(code_text, 'У', 'Я')
-code_text = replace_letter(code_text, 'Ы', 'Ш')
-code_text = replace_letter(code_text, '7', 'Й')
-code_text = replace_letter(code_text, 'r', 'Т')
-code_text = replace_letter(code_text, '8', 'К')
-code_text = replace_letter(code_text, '8', 'Ю')
-code_text = replace_letter(code_text, 't', 'У')
-code_text = replace_letter(code_text, '4', 'Щ')
-code_text = replace_letter(code_text, 'a', 'В')
-code_text = replace_letter(code_text, 'c', 'Р')
-code_text = replace_letter(code_text, '<', 'Ч')
-code_text = replace_letter(code_text, 'Ф', 'М')
-code_text = replace_letter(code_text, 'c', 'З')
-code_text = replace_letter(code_text, '5', 'Б')
-code_text = replace_letter(code_text, '2', 'П')
-code_text = replace_letter(code_text, '7', 'Х')
-code_text = replace_letter(code_text, '2', 'Ж')
-code_text = replace_letter(code_text, 'С', 'Ы')
-code_text = replace_letter(code_text, '5', 'Э')
-code_text = replace_letter(code_text, '<', 'Ц')
-code_text = replace_letter(code_text, '>', 'Ф')
-code_text = replace_letter(code_text, 'Ы', 'С')
-
-
-with open("decoded text.txt", "w", encoding="utf16") as file:
-    file.write(code_text)
+key = get_key(const.KEY)
+encoded_text = rw.read_txt_file(const.INPUT_FILE_2)
+decoded_text = decode_by_key(encoded_text, key)
+rw.write_txt_file(decoded_text, const.OUTPUT_FILE_2)
