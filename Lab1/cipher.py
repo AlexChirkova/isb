@@ -18,6 +18,7 @@ def cipher_atbash(text: str, alph: str) -> str:
     return encoded_text
 
 
-message = rw.read_txt_file(const.INPUT_FILE_1)
-encoded_message = cipher_atbash(message, const.ALPHABET)
-rw.write_txt_file(encoded_message, const.OUTPUT_FILE_1)
+if __name__ == '__main__':
+    message = rw.read_txt_file(const.INPUT_FILE_1)
+    encoded_message = cipher_atbash(message, const.ALPHABET)
+    rw.write_txt_file(encoded_message, const.OUTPUT_FILE_1)

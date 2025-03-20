@@ -7,5 +7,6 @@ INPUT_FILE_2 = "text.txt"
 OUTPUT_FILE_2 = "decoded_text.txt"
 CODE_ALPHABET = "code_alph2.txt"
 KEY = "key.json"
+FREQUENCY_ANALYSIS = "frequency_analysis.json"
 
 
