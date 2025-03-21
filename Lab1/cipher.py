@@ -9,13 +9,17 @@ def cipher_atbash(text: str, alph: str) -> str:
     :param alph: original alphabet
     :return: encoded text
     '''
-    if text is None or alph is None:
-        return "There is no text or alphabet!"
-    encoded_text = ""
-    for let in text:
-        i = alph.index(let)
-        encoded_text += alph[-i-1]
-    return encoded_text
+    try:
+        if text is None or alph is None:
+            return "There is no text or alphabet!"
+        encoded_text = ""
+        for let in text:
+            i = alph.index(let)
+            encoded_text += alph[-i-1]
+        return encoded_text
+
+    except Exception as e:
+        print(f"Error: {e}")
 
 
 if __name__ == '__main__':
