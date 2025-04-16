@@ -2,8 +2,8 @@ import math
 
 from scipy.special import gammainc
 
+import constants as c
 from Random import random_sequence as rs
-from constants import pi
 
 
 def frequency_bitwise_test(seq: str) -> float:
@@ -56,5 +56,32 @@ def longest_seq_of_units_test(seq: str) -> float:
             case 3: v[2] += 1
             case _: v[3] += 1
 
-    he2 = sum(((v[i] - 16*pi[i])**2)/16*pi[i] for i in range(4))
+    he2 = sum(((v[i] - 16*c.pi[i])**2)/16*c.pi[i] for i in range(4))
     return gammainc(3/2, he2/2)
+
+
+def save_res_to_file(fr: float, cb: float, ls: float, path: str) -> None:
+    with open(path, "a") as file:
+        print(f"Pvalue of Frequency bitwise test: {fr}", file=file)
+        print(f"Pvalue of Test for identical consecutive bits: {cb}", file=file)
+        print(f"Pvalue of Test for the longest sequence of units in a block: {ls}", file=file)
+
+
+def main():
+    fr_cpp = frequency_bitwise_test(rs.cpp)
+    cb_cpp = consecutive_bits_test(rs.cpp)
+    ls_cpp = longest_seq_of_units_test(rs.cpp)
+    save_res_to_file(fr_cpp, cb_cpp, ls_cpp, c.INPUT_CPP)
+
+    fr_java = frequency_bitwise_test(rs.java)
+    cb_java = consecutive_bits_test(rs.java)
+    ls_java = longest_seq_of_units_test(rs.java)
+    save_res_to_file(fr_java, cb_java, ls_java, c.INPUT_JAVA)
+
+    fr_py = frequency_bitwise_test(rs.py)
+    cb_py = consecutive_bits_test(rs.py)
+    ls_py = longest_seq_of_units_test(rs.py)
+    save_res_to_file(fr_py, cb_py, ls_py, c.INPUT_PY)
+
+if __name__ == '__main__':
+    main()
