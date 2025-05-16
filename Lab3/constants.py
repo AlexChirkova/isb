@@ -1,6 +1,6 @@
 PATH_TO_PLAINTEXT = "texts/plaintext.txt"
 PATH_TO_CIPHERTEXT = "texts/ciphertext.txt"
-PATH_TO_ENCRYPTED_TEXT = "texts/encrypted_text.txt"
+PATH_TO_ENCRYPTED_TEXT = "texts/decrypted_text.txt"
 
 PATH_TO_SYM_KEY = "keys/symmetric_key.txt"
 PATH_TO_PRIVATE_KEY = "keys/private_key.txt"
