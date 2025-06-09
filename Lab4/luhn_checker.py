@@ -12,7 +12,7 @@ class LuhnChecker:
         try:
             card_number = FileHandler.load_from_txt(path_to_card_number)
             digits = [int(d) for d in str(card_number.decode()) if d.isdigit()]
-            if len(digits) < 13 or len(digits) > 19:
+            if len(digits) != 16:
                 return False
 
             checksum = 0
