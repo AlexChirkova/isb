@@ -1,0 +1,4 @@
+{
+    "operation": "check_card",
+    "card_number": "res.txt"
+}
