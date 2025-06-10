@@ -23,7 +23,7 @@ class TimeMeasurer:
         for num_processes in range(1, max_processes + 1):
             start_time = time.time()
             card = CardFinder()
-            card.find_card_number(bin_prefixes, last4_digits, card_hash)
+            card.find_card_number(bin_prefixes, last4_digits, card_hash, num_processes)
             elapsed = time.time() - start_time
             results.append((num_processes, elapsed))
 

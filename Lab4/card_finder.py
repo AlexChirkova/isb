@@ -5,18 +5,20 @@ from functools import partial
 
 class CardFinder:
     def __init__(self):
-        self.cpu_count = multiprocessing.cpu_count()
+       self.cpu_count = multiprocessing.cpu_count()
 
-    def find_card_number(self, bins, last4_digits, card_hash):
+    def find_card_number(self, bins, last4_digits, card_hash, processes=0):
         """
         Find card number matching the hash with given BIN and last 4 digits
+        :param processes: Count of processes
         :param bins: list of BINs
         :param last4_digits: last 4 digits
         :param card_hash: hash value
         :return: found card number
         """
+        if not processes: processes = self.cpu_count
 
-        with multiprocessing.Pool(processes=self.cpu_count) as pool:
+        with multiprocessing.Pool(processes=processes) as pool:
             for bin_prefix in bins:
                 result = self._process_bin(pool, card_hash, bin_prefix, last4_digits)
                 if result:
